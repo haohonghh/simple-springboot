@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .child{width: 100px;height: 100px;background: #000;margin-top: 10px;}
+    </style>
+</head>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+</head>
+<script>
+    $(document).ready(function(){
+        $("#btn1").click(function(){
+            $("#test").load("a.txt",function(responseTxt,statusTxt,xhr){
+                if(statusTxt=="success")
+                    alert("外部内容加载成功！");
+                if(statusTxt=="error")
+                    alert("Error: "+xhr.status+": "+xhr.statusText);
+            });
+        });
+        $("#btn2").click(function(){
+            $.ajax({
+                type: 'GET',
+                url: "/user/1",
+               // data: data,
+                success: function (data) {
+                    alert(JSON.stringify(data))
+                }
+            });
+        });
+        $("#btn3").click(function(){
+            var student = {"id":1,"userName":"test","password":"abc123","age":12};
+            $.ajax({
+                type: 'POST',
+                url: "/saveOrUpdateStudent",
+                 data: student,
+                success: function (data) {
+                    alert(JSON.stringify(data))
+                }
+            });
+        });
+    });
+</script>
+</head>
+
+<body>
+
+<h3 id="test">请点击下面的按钮，通过 jQuery AJAX 改变这段文本。</h3>
+<button id="btn1" type="button">获得外部的内容</button>
+<button id="btn2" type="button">访问接口</button>
+<button id="btn3" type="button">访问接口</button>
+
+</body>
+</html>
